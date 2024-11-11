@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animal List for Kids</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #ffefd5;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+        }
+        .container {
+            border: 3px solid #ffcccb;
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            color: #ff6347;
+            font-weight: bold;
+        }
+        .list-group-item {
+            background-color: #fffacd;
+            font-size: 1.2rem;
+        }
+        .img-fluid {
+            border: 2px solid #ffb6c1;
+            border-radius: 15px;
+        }
+        input[type="text"] {
+            text-align: center;
+            border: 2px solid #ffcccb;
+            border-radius: 5px;
+            margin-left: 5px;
+            margin-right: 5px;
+        }
+        .is-invalid {
+            border-color: #ff0000;
+            background-color: #ffe6e6;
+        }
+        .text-danger {
+            color: #ff0000;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <!-- Animal List -->
+        <div class="mb-4">
+            <h2 class="text-center">Guess the Animal Name!</h2>
+            <ul class="list-group list-group-horizontal justify-content-center" id="animal-list">
+                <li class="list-group-item" id="list-duck">Duck</li>
+                <li class="list-group-item" id="list-snake">Snake</li>
+                <li class="list-group-item" id="list-pig">Pig</li>
+                <li class="list-group-item" id="list-horse">Horse</li>
+                <li class="list-group-item" id="list-dog">Dog</li>
+                <li class="list-group-item" id="list-lamb">Lamb</li>
+                <li class="list-group-item" id="list-cat">Cat</li>
+            </ul>
+        </div>
+
+        <!-- Animal Images -->
+        <div class="row text-center">
+            <!-- Animal 1 -->
+            <div class="col-md-4 mb-4">
+                <img src="https://st3.depositphotos.com/6633222/17122/v/450/depositphotos_171226322-stock-illustration-brown-horse-cartoon.jpg" alt="Horse" class="img-fluid rounded">
+                <div class="mt-2">
+                    <label for="animal1">H<input type="text" id="animal1" class="form-control d-inline w-25" maxlength="1" data-animal="horse" data-correct="o">r<input type="text" id="animal1_2" class="form-control d-inline w-25" maxlength="1" data-animal="horse" data-correct="s">e</label>
+                </div>
+            </div>
+            <!-- Animal 2 -->
+            <div class="col-md-4 mb-4">
+                <img src="https://www.shutterstock.com/image-vector/cartoon-funny-baby-lamb-on-600nw-2379961145.jpg" alt="Lamb" class="img-fluid rounded">
+                <div class="mt-2">
+                    <label for="animal2">L<input type="text" id="animal2" class="form-control d-inline w-25" maxlength="1" data-animal="lamb" data-correct="a">m<input type="text" id="animal2_2" class="form-control d-inline w-25" maxlength="1" data-animal="lamb" data-correct="b"></label>
+                </div>
+            </div>
+            <!-- Animal 3 -->
+            <div class="col-md-4 mb-4">
+                <img src="https://media.istockphoto.com/id/907663118/vector/cartoon-cute-green-smiles-snake-vector-animal-illustration.jpg?s=612x612&w=0&k=20&c=ZjtezhkHn-ZQMQPh06zGvxOHa673jcWyRYRWVKkIa9U=" alt="Snake" class="img-fluid rounded">
+                <div class="mt-2">
+                    <label for="animal3">S<input type="text" id="animal3" class="form-control d-inline w-25" maxlength="1" data-animal="snake" data-correct="n">a<input type="text" id="animal3_2" class="form-control d-inline w-25" maxlength="1" data-animal="snake" data-correct="k">e</label>
+                </div>
+            </div>
+            <!-- Animal 4 -->
+            <div class="col-md-4 mb-4">
+                <img src="https://www.shutterstock.com/image-vector/illustration-cute-baby-golden-retrieve-600nw-2488093199.jpg" alt="Dog" class="img-fluid rounded">
+                <div class="mt-2">
+                    <label for="animal4">D<input type="text" id="animal4" class="form-control d-inline w-25" maxlength="1" data-animal="dog" data-correct="o">g</label>
+                </div>
+            </div>
+            <!-- Animal 5 -->
+            <div class="col-md-4 mb-4">
+                <img src="https://media.istockphoto.com/id/1097490360/vector/vector-illustration-of-cute-black-cat.jpg?s=612x612&w=0&k=20&c=Ef0qYl79aZJ6NJXJVbJ0onjXVNnSyqrN_TKPjieAIGE=" alt="Cat" class="img-fluid rounded">
+                <div class="mt-2">
+                    <label for="animal5">C<input type="text" id="animal5" class="form-control d-inline w-25" maxlength="1" data-animal="cat" data-correct="a">t</label>
+                </div>
+            </div>
+            <!-- Animal 6 -->
+            <div class="col-md-4 mb-4">
+                <img src="https://www.shutterstock.com/image-vector/cute-duck-green-head-standing-600nw-2314343477.jpg" alt="Duck" class="img-fluid rounded">
+                <div class="mt-2">
+                    <label for="animal6">D<input type="text" id="animal6" class="form-control d-inline w-25" maxlength="1" data-animal="duck" data-correct="u">c<input type="text" id="animal6_2" class="form-control d-inline w-25" maxlength="1" data-animal="duck" data-correct="k"></label>
+                </div>
+            </div>
+            <!-- Animal 7 -->
+            <div class="col-md-4 mb-4">
+                <img src="https://www.shutterstock.com/image-vector/cute-happy-cattle-barn-smile-600nw-2311402909.jpg" alt="Pig" class="img-fluid rounded">
+                <div class="mt-2">
+                    <label for="animal7">P<input type="text" id="animal7" class="form-control d-inline w-25" maxlength="1" data-animal="pig" data-correct="i">g</label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/act1.js"></script>
+</body>
+</html>

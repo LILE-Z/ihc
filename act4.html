@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comparación de características de un perro</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #ffefd5;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            text-align: center;
+        }
+        .container {
+            border: 3px solid #ffcccb;
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: inline-block;
+            margin-top: 50px;
+        }
+        h2 {
+            color: #ff6347;
+            font-weight: bold;
+        }
+        .question {
+            font-size: 1.2rem;
+            margin-top: 20px;
+        }
+        .question img {
+            border: 2px solid #ffb6c1;
+            border-radius: 15px;
+            max-width: 200px;
+        }
+        .answers {
+            margin-top: 10px;
+        }
+        label {
+            font-size: 1.1rem;
+            display: block;
+            margin-top: 5px;
+        }
+        #result {
+            font-weight: bold;
+            color: #008000;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Comparación de características de un perro</h2>
+        <p><strong>Circle the right answers</strong></p>
+        <div class="question">
+            <img src="https://www.shutterstock.com/image-vector/illustration-cute-baby-golden-retrieve-600nw-2488093199.jpg" alt="Imagen de un perro">
+            <div class="answers">
+                <label>1. I am 
+                    <input type="radio" name="size" value="small"> small / 
+                    <input type="radio" name="size" value="big"> big
+                </label>
+                <label>2. I have 
+                    <input type="radio" name="covering" value="feathers"> feathers / 
+                    <input type="radio" name="covering" value="fur"> fur
+                </label>
+                <label>3. I have 
+                    <input type="radio" name="legs" value="two"> two / 
+                    <input type="radio" name="legs" value="four"> four legs
+                </label>
+            </div>
+            <button class="btn btn-primary mt-3" onclick="checkAnswers()">Verify Answers</button>
+            <p id="result"></p>
+        </div>
+    </div>
+
+    <script>
+        function checkAnswers() {
+            // Obtener las respuestas seleccionadas
+            const size = document.querySelector('input[name="size"]:checked');
+            const covering = document.querySelector('input[name="covering"]:checked');
+            const legs = document.querySelector('input[name="legs"]:checked');
+
+            // Verificar que se hayan seleccionado todas las respuestas
+            if (!size || !covering || !legs) {
+                document.getElementById("result").innerText = "Please select an answer for each question.";
+                document.getElementById("result").style.color = "red";
+                return;
+            }
+
+            // Respuestas correctas
+            const correctSize = "small";
+            const correctCovering = "fur";
+            const correctLegs = "four";
+
+            // Comparar respuestas
+            let correctAnswers = 0;
+            if (size.value === correctSize) correctAnswers++;
+            if (covering.value === correctCovering) correctAnswers++;
+            if (legs.value === correctLegs) correctAnswers++;
+
+            // Mostrar resultado
+            if (correctAnswers === 3) {
+                document.getElementById("result").innerText = "All answers are correct! Great job!";
+                document.getElementById("result").style.color = "green";
+            } else {
+                document.getElementById("result").innerText = "You got ${correctAnswers} out of 3 correct. Try again!";
+                document.getElementById("result").style.color = "orange";
+            }
+        }
+    </script>
+</body>
+</html>

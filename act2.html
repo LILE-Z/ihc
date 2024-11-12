@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animales en Inglés</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #ffefd5;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+        }
+        .container {
+            border: 3px solid #ffcccb;
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            color: #ff6347;
+            font-weight: bold;
+        }
+        .list-group-item {
+            background-color: #fffacd;
+            font-size: 1.2rem;
+        }
+        .img-fluid {
+            border: 2px solid #ffb6c1;
+            border-radius: 15px;
+            width: 300px;
+            height: auto;
+        }
+        input[type="text"] {
+            text-align: center;
+            border: 2px solid #ffcccb;
+            border-radius: 5px;
+            margin-left: 5px;
+            margin-right: 5px;
+        }
+        .is-invalid {
+            border-color: #ff0000;
+            background-color: #ffe6e6;
+        }
+        .text-danger {
+            color: #ff0000;
+        }
+        .animal-container {
+            position: relative;
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        .highlight {
+            background-color: lightgreen;
+            border-radius: 5px;
+            color: white;
+        }
+        .correct {
+            color: green;
+            font-size: 24px;
+            position: absolute;
+            top: 0;
+            right: 0;
+        }
+        .shake {
+            animation: shake 0.5s;
+        }
+        @keyframes shake {
+            0% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            50% { transform: translateX(10px); }
+            75% { transform: translateX(-10px); }
+            100% { transform: translateX(0); }
+        }
+        .overlay-div {
+            position: absolute;
+            background-color: rgba(255, 255, 255, 0.7);
+            border: 2px solid #000;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<div class="container mt-5">
+    <h1 class="text-center">Aprende Inglés con Animales</h1>
+
+    <!-- Bat Section -->
+    <div class="animal-container">
+        <img id="batImage" src="https://img.freepik.com/premium-vector/cartoon-image-bat-with-face-eyes_1230457-30390.jpg" alt="Bat" class="img-fluid">
+        <div id="batWing1" class="overlay-div" style="width: 100px; height: 50px; top: 20%; left: 30%;">Wings</div>
+        <div id="batWing2" class="overlay-div" style="width: 100px; height: 50px; top: 20%; left: 50%;">Wings</div>
+    </div>
+
+    <!-- Elephant Section -->
+    <div class="animal-container">
+        <img id="elephantImage" src="https://static.vecteezy.com/system/resources/previews/008/734/822/non_2x/cartoon-happy-elephant-vector.jpg" alt="Elephant" class="img-fluid">
+        <div id="elephantLeg1" class="overlay-div" style="width: 100px; height: 50px; top: 70%; left: 20%;">Legs</div>
+        <div id="elephantLeg2" class="overlay-div" style="width: 100px; height: 50px; top: 70%; left: 35%;">Legs</div>
+        <div id="elephantLeg3" class="overlay-div" style="width: 100px; height: 50px; top: 70%; left: 50%;">Legs</div>
+        <div id="elephantLeg4" class="overlay-div" style="width: 100px; height: 50px; top: 70%; left: 65%;">Legs</div>
+    </div>
+
+    <!-- Cat Section -->
+    <div class="animal-container">
+        <img id="catImage" src="https://media.istockphoto.com/id/1097490360/vector/vector-illustration-of-cute-black-cat.jpg?s=612x612&w=0&k=20&c=Ef0qYl79aZJ6NJXJVbJ0onjXVNnSyqrN_TKPjieAIGE=" alt="Cat" class="img-fluid">
+        <div id="catFur1" class="overlay-div" style="width: 150px; height: 50px; top: 50%; left: 25%;">Fur</div>
+        <div id="catFur2" class="overlay-div" style="width: 150px; height: 50px; top: 50%; left: 45%;">Fur</div>
+    </div>
+</div>
+
+<script>
+    // Function to add shake animation if the image is clicked
+    function shakeImage(image) {
+        image.classList.add('shake');
+        setTimeout(() => {
+            image.classList.remove('shake');
+        }, 500);
+    }
+
+    // Function to handle correct div click
+    function handleCorrectClick(div) {
+        if (!div.classList.contains('highlight')) {
+            div.classList.add('highlight');
+            const checkmark = document.createElement('span');
+            checkmark.classList.add('correct');
+            checkmark.innerHTML = '&#10003;';
+            div.appendChild(checkmark);
+        }
+    }
+
+    // Event Listeners for Bat
+    document.getElementById('batImage').addEventListener('click', () => shakeImage(document.getElementById('batImage')));
+    document.getElementById('batWing1').addEventListener('click', () => handleCorrectClick(document.getElementById('batWing1')));
+    document.getElementById('batWing2').addEventListener('click', () => handleCorrectClick(document.getElementById('batWing2')));
+
+    // Event Listeners for Elephant
+    document.getElementById('elephantImage').addEventListener('click', () => shakeImage(document.getElementById('elephantImage')));
+    document.getElementById('elephantLeg1').addEventListener('click', () => handleCorrectClick(document.getElementById('elephantLeg1')));
+    document.getElementById('elephantLeg2').addEventListener('click', () => handleCorrectClick(document.getElementById('elephantLeg2')));
+    document.getElementById('elephantLeg3').addEventListener('click', () => handleCorrectClick(document.getElementById('elephantLeg3')));
+    document.getElementById('elephantLeg4').addEventListener('click', () => handleCorrectClick(document.getElementById('elephantLeg4')));
+
+    // Event Listeners for Cat
+    document.getElementById('catImage').addEventListener('click', () => shakeImage(document.getElementById('catImage')));
+    document.getElementById('catFur1').addEventListener('click', () => handleCorrectClick(document.getElementById('catFur1')));
+    document.getElementById('catFur2').addEventListener('click', () => handleCorrectClick(document.getElementById('catFur2')));
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
+

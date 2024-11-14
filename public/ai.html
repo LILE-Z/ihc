@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gemini API Test</title>
+    <!-- Incluir Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Incluir la librería marked.js -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+        body {
+            background-color: #ffefd5;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+        }
+        .container {
+            border: 3px solid #ffcccb;
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            color: #ff6347;
+            font-weight: bold;
+        }
+        #output {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border-radius: 10px;
+            padding: 20px;
+            font-size: 1.5rem;
+            color: #ff;
+        }
+        .list-group-item {
+            background-color: #fffacd;
+            font-size: 1.2rem;
+        }
+        .img-fluid {
+            border: 2px solid #ffb6c1;
+            border-radius: 15px;
+        }
+        input[type="text"] {
+            text-align: center;
+            border: 2px solid #ffcccb;
+            border-radius: 5px;
+            margin-left: 5px;
+            margin-right: 5px;
+        }
+        .is-invalid {
+            border-color: #ff0000;
+            background-color: #ffe6e6;
+        }
+        .text-danger {
+            color: #ff0000;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="text-center mb-4">Gemini API Test</h1>
+        <div id="output" class="p-3 mb-3 shadow-sm"></div>
+    </div>
+
+    <script>
+        const contexto = "Simula ser un profesor de inglés que revisa y da retroalimentación a un estudiante según su desempeño dentro de una actividad que hizo. Yo te enviaré toda la información necesaria. Recuerda solo devolver un texto, no uses markdown, puedes usar emojis.";
+
+        async function setPromptAndGenerate() {
+            try {
+                // Espera y luego realiza la solicitud a /generate para obtener la respuesta
+                const response = await fetch('/generate');
+                const data = await response.text();
+
+                // Convertir el contenido de Markdown a HTML usando marked.js
+                const htmlContent = marked.parse(data);
+
+                // Mostrar el HTML generado en el elemento de salida
+                document.getElementById('output').innerHTML = htmlContent;
+            } catch (error) {
+                console.error("Error:", error);
+                document.getElementById('output').textContent = "Error al generar el texto.";
+            }
+        }
+
+        // Llama a la función para configurar el prompt y generar el texto
+        setPromptAndGenerate();
+    </script>
+</body>
+</html>
+

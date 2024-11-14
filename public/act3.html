@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en"> <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animal Quiz Game</title>
+    <!-- Enlace a Bootstrap -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+
+        .quiz-container {
+            max-width: 900px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+
+        .option {
+            position: relative;
+            cursor: pointer;
+            border-radius: 8px;
+            padding: 10px;
+            margin: 10px;
+            transition: transform 0.2s;
+            border: 2px solid transparent;
+        }
+
+        .option img {
+            width: 100%;
+            height: 100%;
+            max-width: 200px;
+            max-height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .option:hover {
+            transform: scale(1.05);
+        }
+
+        .option.selected {
+            border-color: blue;
+        }
+
+        .correct {
+            border-color: green;
+            background-color: #e8f5e9;
+        }
+
+        .incorrect {
+            border-color: red;
+            background-color: #ffebee;
+        }
+
+        .correct::after {
+            content: " ✔️";
+            color: green;
+            font-size: 1.5em;
+            margin-left: 10px;
+        }
+
+        .incorrect::after {
+            content: " ❌";
+            color: red;
+            font-size: 1.5em;
+            margin-left: 10px;
+        }
+
+        .btn-home {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #ff6347;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .btn-home:hover {
+            background-color: #ff4500;
+        }
+
+        /* Aseguramos que la cuadrícula se vea bien en pantallas pequeñas */
+        .options {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        /* Mejorar el tamaño de la fuente de las preguntas */
+        .question {
+            font-size: 1.5em;
+            margin-bottom: 20px;
+        }
+
+        /* Estilo para el botón revisar */
+        .btn-revise {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 1.2em;
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .btn-revise:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div id="quiz-container" class="container quiz-container shadow p-4">
+        <!-- Aquí irá el contenido dinámico del juego -->
+    </div>
+
+    <!-- Home Button -->
+    <button class="btn-home btn btn-danger" onclick="window.location.href = 'welcome.html';">Home</button>
+
+    <!-- Enlace al archivo JavaScript -->
+    <script src="js/act3.js"></script>
+    <!-- Enlace a JavaScript de Bootstrap y dependencias -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -33,7 +33,7 @@ function showCompletionModal() {
     const inputs = document.querySelectorAll('input[data-animal]');
     let allCorrect = true;
     let correctCount = 0;
-    let contexto="Simula ser un profesor de ingles que revisa y da retroalimentacion a un estudiante segun su desempeño dentro de una actividad que hizo. Yo te enviare toda la informacion necesaria, recuerda solo devuelve un texto, puedes usar emojis , y recuerda se muy extenso al menos 5000 caracteres y usa markdown para estilisa";
+    let contexto="Simula ser un profesor de ingles que revisa y da retroalimentacion a un estudiante segun su desempeño dentro de una actividad que hizo. Yo te enviare toda la informacion necesaria, recuerda solo devuelve un texto, puedes usar emojis , y recuerda se muy extenso al menos 1000 caracteres y usa markdown para estilisa ";
     let report = contexto+"Activity Name: Guess the Animal Name!\n\nDescription: The activity consisted of guessing the correct letters for different animal names based on the images shown.\n\nResults:\n";
 
     inputs.forEach(input => {
@@ -80,6 +80,6 @@ async function sendPrompt(prompt) {
 function closeModal() {
     document.getElementById('completionModal').style.display = 'none';
     // Redirect to ia.html after closing the modal
-    window.location.href = 'index.html';
+    window.location.href = 'ai.html';
 }
 

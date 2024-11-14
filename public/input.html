@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prompt Input Page</title>
+</head>
+<body>
+    <h1>Ingrese el prompt</h1>
+    <input type="text" id="promptInput" placeholder="Escribe tu prompt aquí">
+    <button onclick="sendPrompt()">Enviar</button>
+
+    <script>
+        async function sendPrompt() {
+            const prompt = document.getElementById('promptInput').value;
+
+            // Envía el prompt al servidor con una solicitud POST
+            await fetch('/setPrompt', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ prompt })
+            });
+
+            // Redirige a index.html después de enviar el prompt
+            window.location.href = 'index.html';
+        }
+    </script>
+</body>
+</html>
+

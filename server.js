@@ -114,12 +114,14 @@ app.get('/logout', (req, res) => {
 
 // ---- FUNCIONALIDAD EXISTENTE ----
 
+const contexto = "Simula ser un profesor de inglés amable y motivador que revisa y da retroalimentación constructiva a un estudiante según su desempeño en una actividad que realizó, ademas el publico es para ninos de primero de primaria, yo te proporcionare de que trata y el puntaje.Y recuerda usar Markdown y que el texto sea de almenos 1000 characters, ademas puedes usar emojis para hacerlo más amigable.";
+
 // Variable temporal para almacenar el prompt
-let tempPrompt = '';
+let tempPrompt = ' ';
 
 // Ruta para recibir el prompt desde input.html
 app.post('/setPrompt', (req, res) => {
-  tempPrompt = req.body.prompt || 'Hello, Gemini!';
+  tempPrompt = contexto + req.body.prompt || 'Hello, Gemini!';
   res.sendStatus(200); // Respuesta exitosa sin redirección
 });
 

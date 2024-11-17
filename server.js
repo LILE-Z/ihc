@@ -78,19 +78,21 @@ app.post('/login', (req, res) => {
       return res.status(500).send('Error del servidor');
     }
 
+    // Caso 1: Correo no registrado
     if (results.length === 0) {
       console.log('Correo no registrado:', email);
-      return res.status(401).send('Correo o contraseña incorrectos');
+      return res.render('error-login', { message: 'Correo o contraseña incorrectos.' });
     }
 
     const user = results[0];
 
-    // Compara las contraseñas manualmente (sensible a mayúsculas y minúsculas)
+    // Caso 2: Contraseña incorrecta
     if (password !== user.password) {
       console.log('Contraseña incorrecta para el usuario:', email);
-      return res.status(401).send('Correo o contraseña incorrectos');
+      return res.render('error-login', { message: 'Correo o contraseña incorrectos.' });
     }
 
+    // Caso de éxito: Usuario autenticado
     console.log('Usuario autenticado:', user.email);
     req.session.user = user; // Guarda al usuario en la sesión
     return res.redirect('/');

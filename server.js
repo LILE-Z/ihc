@@ -6,7 +6,9 @@ const mysql = require('mysql2');
 const { GoogleGenerativeAI } = require('@google/generative-ai');
 const path = require('path');
 
-const app = express(); const PORT = 3000;
+const app = express();
+const PORT = 3000;
+
 // Middleware para manejar datos JSON y formularios
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -35,6 +37,7 @@ db.connect((err) => {
   }
   console.log('Conectado a la base de datos');
 });
+
 // Inicializa el cliente de Gemini
 const genAI = new GoogleGenerativeAI(process.env.API_KEY);
 const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
@@ -47,18 +50,21 @@ function isAuthenticated(req, res, next) {
   res.redirect('/login'); // Redirige al login
 }
 
-// Middleware para proteger el directorio `public`
-app.use('/public', (req, res, next) => {
+// Middleware para proteger el acceso a la carpeta js
+app.use('/js', (req, res, next) => {
   if (!req.session.user) {
-    return res.redirect('/login'); // Redirige si no está autenticado
+    return res.status(403).send('Acceso prohibido. Debes iniciar sesión.');
   }
   next();
 });
-app.use(express.static(path.join(__dirname, 'public')));
+app.use('/js', express.static(path.join(__dirname, 'public/js')));
 
+// Middleware para servir archivos CSS públicamente
+app.use('/css', express.static(path.join(__dirname, 'public/css')));
 
 // Configuración de vistas (login y register)
 app.set('view engine', 'hbs');
+app.set('views', path.join(__dirname, 'views'));
 
 // ---- SISTEMA DE LOGIN ----
 
@@ -92,7 +98,7 @@ app.post('/login', (req, res) => {
 // Ruta para servir la página principal (index.html)
 app.get('/', isAuthenticated, (req, res) => {
   console.log('Usuario autenticado accedió a la página principal:', req.session.user.email); // Log del acceso a la página principal
-  res.sendFile(path.join(__dirname, 'public/index.html')); // Asegúrate de que la ruta sea correcta
+  res.sendFile(path.join(__dirname, 'public/js/index.html')); // Ruta correcta para el archivo protegido
 });
 
 // Ruta para renderizar el formulario de registro
@@ -152,4 +158,3 @@ app.get('/generate', isAuthenticated, async (req, res) => {
 app.listen(PORT, () => {
   console.log(`Servidor ejecutándose en http://localhost:${PORT}`);
 });
-

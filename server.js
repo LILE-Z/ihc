@@ -70,21 +70,30 @@ app.get('/login', (req, res) => {
 app.post('/login', (req, res) => {
   const { email, password } = req.body;
 
-  const query = 'SELECT * FROM users WHERE email = ? AND password = ?';
-  db.query(query, [email, password], (err, results) => {
+  // Busca solo el usuario por correo
+  const query = 'SELECT * FROM users WHERE email = ?';
+  db.query(query, [email], (err, results) => {
     if (err) {
       console.error('Error al consultar la base de datos:', err);
       return res.status(500).send('Error del servidor');
     }
 
-    if (results.length > 0) {
-      console.log('Usuario autenticado:', results[0].email); // Log del usuario autenticado
-      req.session.user = results[0]; // Guarda al usuario en la sesión
-      return res.redirect('/'); // Redirige a la página principal (protected index.html)
-    } else {
-      console.log('Intento de inicio de sesión fallido con el correo:', email); // Log del intento fallido
+    if (results.length === 0) {
+      console.log('Correo no registrado:', email);
       return res.status(401).send('Correo o contraseña incorrectos');
     }
+
+    const user = results[0];
+
+    // Compara las contraseñas manualmente (sensible a mayúsculas y minúsculas)
+    if (password !== user.password) {
+      console.log('Contraseña incorrecta para el usuario:', email);
+      return res.status(401).send('Correo o contraseña incorrectos');
+    }
+
+    console.log('Usuario autenticado:', user.email);
+    req.session.user = user; // Guarda al usuario en la sesión
+    return res.redirect('/');
   });
 });
 

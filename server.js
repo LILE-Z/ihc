@@ -121,9 +121,10 @@ app.post('/forgot-password', (req, res) => {
       return res.status(500).send('Error del servidor');
     }
 
+    // Si el correo no está registrado
     if (results.length === 0) {
       console.log('Correo no encontrado:', email);
-      return res.status(404).send('Correo no registrado');
+      return res.render('error-forgot-password'); // Redirige a la vista de error
     }
 
     console.log('Correo encontrado:', email);
@@ -136,6 +137,7 @@ app.get('/reset-password', (req, res) => {
   const email = req.query.email; // Obtiene el correo de la query
   res.render('reset-password', { email }); // Pasa el correo al formulario
 });
+
 
 // Ruta para manejar el cambio de contraseña
 app.post('/reset-password', (req, res) => {

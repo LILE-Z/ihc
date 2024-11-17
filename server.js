@@ -74,16 +74,24 @@ app.post('/login', (req, res) => {
   db.query(query, [email, password], (err, results) => {
     if (err) {
       console.error('Error al consultar la base de datos:', err);
-      return res.send('Error del servidor');
+      return res.status(500).send('Error del servidor');
     }
 
     if (results.length > 0) {
+      console.log('Usuario autenticado:', results[0].email); // Log del usuario autenticado
       req.session.user = results[0]; // Guarda al usuario en la sesión
-      res.redirect('/'); // Redirige a la página principal
+      return res.redirect('/'); // Redirige a la página principal
     } else {
-      res.send('Correo o contraseña incorrectos');
+      console.log('Intento de inicio de sesión fallido con el correo:', email); // Log del intento fallido
+      return res.status(401).send('Correo o contraseña incorrectos');
     }
   });
+});
+
+// Ruta para servir la página principal (index.html)
+app.get('/', isAuthenticated, (req, res) => {
+  console.log('Usuario autenticado accedió a la página principal:', req.session.user.email); // Log del acceso a la página principal
+  res.sendFile(path.join(__dirname, 'public/index.html')); // Asegúrate de que la ruta sea correcta
 });
 
 // Ruta para renderizar el formulario de registro

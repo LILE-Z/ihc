@@ -54,7 +54,8 @@ app.use('/public', (req, res, next) => {
   }
   next();
 });
-app.use('/public', express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public')));
+
 
 // Configuración de vistas (login y register)
 app.set('view engine', 'hbs');

@@ -30,7 +30,7 @@ body {
   .form-control {
     background-color: #dde7f7;
     border: 1px solid #172a45;
-    color: #e6f1ff;
+    color: #172a45;
   }
   
   .form-control:focus {

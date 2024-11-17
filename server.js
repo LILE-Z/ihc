@@ -38,10 +38,6 @@ db.connect((err) => {
   console.log('Conectado a la base de datos');
 });
 
-// Inicializa el cliente de Gemini
-const genAI = new GoogleGenerativeAI(process.env.API_KEY);
-const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
-
 // Middleware para verificar autenticación
 function isAuthenticated(req, res, next) {
   if (req.session.user) {
@@ -50,17 +46,14 @@ function isAuthenticated(req, res, next) {
   res.redirect('/login'); // Redirige al login
 }
 
-// Middleware para proteger el acceso a la carpeta js
-app.use('/js', (req, res, next) => {
-  if (!req.session.user) {
-    return res.status(403).send('Acceso prohibido. Debes iniciar sesión.');
-  }
-  next();
-});
-app.use('/js', express.static(path.join(__dirname, 'public/js')));
-
 // Middleware para servir archivos CSS públicamente
 app.use('/css', express.static(path.join(__dirname, 'public/css')));
+
+// Proteger el acceso a la carpeta pages
+app.use('/pages', isAuthenticated, express.static(path.join(__dirname, 'public/pages')));
+
+// Proteger el acceso a la carpeta js
+app.use('/js', isAuthenticated, express.static(path.join(__dirname, 'public/js')));
 
 // Configuración de vistas (login y register)
 app.set('view engine', 'hbs');
@@ -87,7 +80,7 @@ app.post('/login', (req, res) => {
     if (results.length > 0) {
       console.log('Usuario autenticado:', results[0].email); // Log del usuario autenticado
       req.session.user = results[0]; // Guarda al usuario en la sesión
-      return res.redirect('/'); // Redirige a la página principal
+      return res.redirect('/'); // Redirige a la página principal (protected index.html)
     } else {
       console.log('Intento de inicio de sesión fallido con el correo:', email); // Log del intento fallido
       return res.status(401).send('Correo o contraseña incorrectos');
@@ -98,8 +91,57 @@ app.post('/login', (req, res) => {
 // Ruta para servir la página principal (index.html)
 app.get('/', isAuthenticated, (req, res) => {
   console.log('Usuario autenticado accedió a la página principal:', req.session.user.email); // Log del acceso a la página principal
-  res.sendFile(path.join(__dirname, 'public/js/index.html')); // Ruta correcta para el archivo protegido
+  res.sendFile(path.join(__dirname, 'public/pages/index.html')); // Redirige al index.html dentro de /pages
 });
+
+// Ruta para renderizar el formulario de recuperación
+app.get('/forgot-password', (req, res) => {
+  res.render('forgot-password'); // Renderiza el formulario de recuperación
+});
+
+// Ruta para manejar el envío del correo electrónico
+app.post('/forgot-password', (req, res) => {
+  const { email } = req.body;
+
+  const query = 'SELECT * FROM users WHERE email = ?';
+  db.query(query, [email], (err, results) => {
+    if (err) {
+      console.error('Error al consultar la base de datos:', err);
+      return res.status(500).send('Error del servidor');
+    }
+
+    if (results.length === 0) {
+      console.log('Correo no encontrado:', email);
+      return res.status(404).send('Correo no registrado');
+    }
+
+    console.log('Correo encontrado:', email);
+    res.redirect(`/reset-password?email=${encodeURIComponent(email)}`); // Redirige al formulario de restablecimiento
+  });
+});
+
+// Ruta para mostrar el formulario de restablecimiento de contraseña
+app.get('/reset-password', (req, res) => {
+  const email = req.query.email; // Obtiene el correo de la query
+  res.render('reset-password', { email }); // Pasa el correo al formulario
+});
+
+// Ruta para manejar el cambio de contraseña
+app.post('/reset-password', (req, res) => {
+  const { email, newPassword } = req.body;
+
+  const query = 'UPDATE users SET password = ? WHERE email = ?';
+  db.query(query, [newPassword, email], (err) => {
+    if (err) {
+      console.error('Error al actualizar la contraseña:', err);
+      return res.status(500).send('Error al actualizar la contraseña');
+    }
+
+    console.log('Contraseña actualizada para:', email);
+    res.redirect('/login'); // Redirige al login después de actualizar la contraseña
+  });
+});
+
 
 // Ruta para renderizar el formulario de registro
 app.get('/register', (req, res) => {

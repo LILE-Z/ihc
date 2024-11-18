@@ -49,13 +49,6 @@
             border-radius: 5px;
             color: white;
         }
-        .correct {
-            color: green;
-            font-size: 24px;
-            position: absolute;
-            top: 0;
-            right: 0;
-        }
         .shake {
             animation: shake 0.5s;
         }
@@ -75,113 +68,47 @@
     <!-- Bat Section -->
     <div class="animal-container">
         <img id="batImage" src="https://img.freepik.com/premium-vector/cartoon-image-bat-with-face-eyes_1230457-30390.jpg" alt="Bat" class="img-fluid">
-        <div id="batWing1" class="overlay-div" style="transform: rotate(28deg); width: 124px; height: 48px; top: 51%; left: 40%;"></div>
-        <div id="batWing2" class="overlay-div" style="transform: rotate(114deg); width: 153px; height: 60px; top: 27%; left: 51%;"></div>
+        <div id="batWing1" class="overlay-div" onclick="handleClick(this, 'bat', 'wing', true)" style="transform: rotate(28deg); width: 124px; height: 48px; top: 51%; left: 40%;"></div>
+        <div id="batWing2" class="overlay-div" onclick="handleClick(this, 'bat', 'wing', false)" style="transform: rotate(114deg); width: 153px; height: 60px; top: 27%; left: 51%;"></div>
         <div class="animal-description">Find the wings</div>
     </div>
 
     <!-- Elephant Section -->
     <div class="animal-container">
         <img id="elephantImage" src="https://static.vecteezy.com/system/resources/previews/008/734/822/non_2x/cartoon-happy-elephant-vector.jpg" alt="Elephant" class="img-fluid">
-        <div id="elephantLeg1" class="overlay-div" style="transform: rotate(90deg); width: 90px; height: 40px; top: 68%; left: 42%;"></div>
-        <div id="elephantLeg2" class="overlay-div" style="transform: rotate(90deg); width: 90px; height: 40px; top: 70%; left: 47%;"></div>
-        <div id="elephantLeg3" class="overlay-div" style="transform: rotate(90deg); width: 60px; height: 37px; top: 75%; left: 51.5%;"></div>
-        <div id="elephantLeg4" class="overlay-div" style="transform: rotate(78deg); width: 95px; height: 45px; top: 66%; left: 54%;"></div>
+        <div id="elephantLeg1" class="overlay-div" onclick="handleClick(this, 'elephant', 'leg', true)" style="transform: rotate(90deg); width: 90px; height: 40px; top: 68%; left: 42%;"></div>
+        <div id="elephantLeg2" class="overlay-div" onclick="handleClick(this, 'elephant', 'leg', false)" style="transform: rotate(90deg); width: 90px; height: 40px; top: 70%; left: 47%;"></div>
         <div class="animal-description">Find the legs</div>
     </div>
 
     <!-- Cat Section -->
     <div class="animal-container">
         <img id="catImage" src="https://media.istockphoto.com/id/1097490360/vector/vector-illustration-of-cute-black-cat.jpg?s=612x612&w=0&k=20&c=Ef0qYl79aZJ6NJXJVbJ0onjXVNnSyqrN_TKPjieAIGE=" alt="Cat" class="img-fluid">
-        <div id="catFur1" class="overlay-div" style="width: 94px; height: 38px; top: 32%; left: 46.5%;"></div>
-        <div id="catFur2" class="overlay-div" style="width: 82px; height: 45px; top: 70%; left: 47%;"></div>
+        <div id="catFur1" class="overlay-div" onclick="handleClick(this, 'cat', 'fur', true)" style="width: 94px; height: 38px; top: 32%; left: 46.5%;"></div>
+        <div id="catFur2" class="overlay-div" onclick="handleClick(this, 'cat', 'fur', false)" style="width: 82px; height: 45px; top: 70%; left: 47%;"></div>
         <div class="animal-description">Find the fur</div>
     </div>
 </div>
 
-<script>
-    let incorrectClicks = 0;
-    let completedImages = 0;
-
-    // Function to add shake animation if the image is clicked
-    function shakeImage(image) {
-        incorrectClicks++;
-        image.classList.add('shake');
-        setTimeout(() => {
-            image.classList.remove('shake');
-        }, 500);
-
-        if (incorrectClicks >= 3) {
-            incorrectClicks = 0; // Reset incorrect clicks
-            showModal('Has perdido', 'Has hecho demasiados intentos incorrectos.');
-        }
-    }
-
-    // Function to handle correct div click
-    function handleCorrectClick(div, image) {
-        if (!image.classList.contains('highlight')) {
-            div.classList.add('highlight'); // Highlight the correct div
-            image.classList.add('highlight'); // Highlight the image
-            completedImages++;
-            checkCompletion();
-        }
-    }
-
-    // Function to check if all images are completed
-    function checkCompletion() {
-        const totalImages = document.querySelectorAll('.animal-container').length;
-        if (completedImages === totalImages) {
-            showModal('¡Felicidades!', 'Has seleccionado todas las partes correctamente.');
-        }
-    }
-
-    // Function to show modal
-    function showModal(title, message) {
-        const existingModal = document.getElementById('resultModal');
-        if (existingModal) existingModal.remove();
-
-        const modalHtml = `
-            <div class="modal fade" id="resultModal" tabindex="-1" aria-labelledby="resultModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="resultModalLabel">${title}</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            ${message}
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                        </div>
-                    </div>
-                </div>
+<!-- Modal de actividad completada -->
+<div id="completionModal" class="modal" tabindex="-1" style="display:none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.7);">
+    <div class="modal-dialog" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #fffbf0; padding: 30px; border-radius: 15px; box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);">
+        <div class="modal-content">
+            <div class="modal-header" style="border-bottom: none; text-align: center;">
+                <h5 class="modal-title">Activity Completed!</h5>
             </div>
-        `;
-        document.body.insertAdjacentHTML('beforeend', modalHtml);
-        const modal = new bootstrap.Modal(document.getElementById('resultModal'));
-        modal.show();
-    }
+            <div class="modal-body">
+                <p>Congratulations! You've completed the activity correctly!</p>
+            </div>
+            <div class="modal-footer" style="justify-content: center;">
+                <button type="button" id="submitActivity" class="btn btn-success" style="font-size: 1.2rem; padding: 10px 20px;">Yay! Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 
-    // Event Listeners for Bat
-    document.getElementById('batImage').addEventListener('click', () => shakeImage(document.getElementById('batImage')));
-    document.getElementById('batWing1').addEventListener('click', () => handleCorrectClick(document.getElementById('batWing1'), document.getElementById('batImage')));
-    document.getElementById('batWing2').addEventListener('click', () => handleCorrectClick(document.getElementById('batWing2'), document.getElementById('batImage')));
-
-    // Event Listeners for Elephant
-    document.getElementById('elephantImage').addEventListener('click', () => shakeImage(document.getElementById('elephantImage')));
-    document.getElementById('elephantLeg1').addEventListener('click', () => handleCorrectClick(document.getElementById('elephantLeg1'), document.getElementById('elephantImage')));
-    document.getElementById('elephantLeg2').addEventListener('click', () => handleCorrectClick(document.getElementById('elephantLeg2'), document.getElementById('elephantImage')));
-    document.getElementById('elephantLeg3').addEventListener('click', () => handleCorrectClick(document.getElementById('elephantLeg3'), document.getElementById('elephantImage')));
-    document.getElementById('elephantLeg4').addEventListener('click', () => handleCorrectClick(document.getElementById('elephantLeg4'), document.getElementById('elephantImage')));
-
-    // Event Listeners for Cat
-    document.getElementById('catImage').addEventListener('click', () => shakeImage(document.getElementById('catImage')));
-    document.getElementById('catFur1').addEventListener('click', () => handleCorrectClick(document.getElementById('catFur1'), document.getElementById('catImage')));
-    document.getElementById('catFur2').addEventListener('click', () => handleCorrectClick(document.getElementById('catFur2'), document.getElementById('catImage')));
-</script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="/js/act2.js"></script>
 </body>
 </html>
-

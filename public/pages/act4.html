@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Comparación de características de un perro</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
         body {
             background-color: #ffefd5;
@@ -40,72 +40,50 @@
             display: block;
             margin-top: 5px;
         }
-        #result {
-            font-weight: bold;
-            color: #008000;
-            margin-top: 20px;
-        }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h2>Comparación de características de un perro</h2>
-        <p><strong>Circle the right answers</strong></p>
-        <div class="question">
-            <img src="https://www.shutterstock.com/image-vector/illustration-cute-baby-golden-retrieve-600nw-2488093199.jpg" alt="Imagen de un perro">
-            <div class="answers">
-                <label>1. I am 
-                    <input type="radio" name="size" value="small"> small / 
-                    <input type="radio" name="size" value="big"> big
-                </label>
-                <label>2. I have 
-                    <input type="radio" name="covering" value="feathers"> feathers / 
-                    <input type="radio" name="covering" value="fur"> fur
-                </label>
-                <label>3. I have 
-                    <input type="radio" name="legs" value="two"> two / 
-                    <input type="radio" name="legs" value="four"> four legs
-                </label>
+<div class="container">
+    <h2>Comparación de características de un perro</h2>
+    <p><strong>Circle the right answers</strong></p>
+    <div class="question">
+        <img src="https://www.shutterstock.com/image-vector/illustration-cute-baby-golden-retrieve-600nw-2488093199.jpg" alt="Imagen de un perro">
+        <div class="answers">
+            <label>1. I am 
+                <input type="radio" name="size" value="small"> small / 
+                <input type="radio" name="size" value="big"> big
+            </label>
+            <label>2. I have 
+                <input type="radio" name="covering" value="feathers"> feathers / 
+                <input type="radio" name="covering" value="fur"> fur
+            </label>
+            <label>3. I have 
+                <input type="radio" name="legs" value="two"> two / 
+                <input type="radio" name="legs" value="four"> four legs
+            </label>
+        </div>
+        <button class="btn btn-primary mt-3" id="verifyAnswers">Verify Answers</button>
+    </div>
+</div>
+
+<!-- Modal -->
+<div id="completionModal" class="modal" tabindex="-1" style="display:none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.7);">
+    <div class="modal-dialog" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #fffbf0; padding: 30px; border-radius: 15px; box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);">
+        <div class="modal-content">
+            <div class="modal-header" style="border-bottom: none; text-align: center;">
+                <h5 class="modal-title">Activity Completed!</h5>
             </div>
-            <button class="btn btn-primary mt-3" onclick="checkAnswers()">Verify Answers</button>
-            <p id="result"></p>
+            <div class="modal-body">
+                <p id="modalMessage">Congratulations! You've completed the activity.</p>
+            </div>
+            <div class="modal-footer" style="justify-content: center;">
+                <button type="button" class="btn btn-success" id="submitActivity" style="font-size: 1.2rem; padding: 10px 20px;">Send and Close</button>
+            </div>
         </div>
     </div>
+</div>
 
-    <script>
-        function checkAnswers() {
-            // Obtener las respuestas seleccionadas
-            const size = document.querySelector('input[name="size"]:checked');
-            const covering = document.querySelector('input[name="covering"]:checked');
-            const legs = document.querySelector('input[name="legs"]:checked');
-
-            // Verificar que se hayan seleccionado todas las respuestas
-            if (!size || !covering || !legs) {
-                document.getElementById("result").innerText = "Please select an answer for each question.";
-                document.getElementById("result").style.color = "red";
-                return;
-            }
-
-            // Respuestas correctas
-            const correctSize = "small";
-            const correctCovering = "fur";
-            const correctLegs = "four";
-
-            // Comparar respuestas
-            let correctAnswers = 0;
-            if (size.value === correctSize) correctAnswers++;
-            if (covering.value === correctCovering) correctAnswers++;
-            if (legs.value === correctLegs) correctAnswers++;
-
-            // Mostrar resultado
-            if (correctAnswers === 3) {
-                document.getElementById("result").innerText = "All answers are correct! Great job!";
-                document.getElementById("result").style.color = "green";
-            } else {
-                document.getElementById("result").innerText = `You got ${correctAnswers} out of 3 correct. Try again!`; // Cambiar comillas simples por comillas invertidas
-                document.getElementById("result").style.color = "orange";
-            }
-        }
-    </script>
+<script src="/js/act4.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

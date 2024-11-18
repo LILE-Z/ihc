@@ -52,6 +52,8 @@ function isAuthenticated(req, res, next) {
 // Middleware para servir archivos estáticos (CSS)
 app.use('/css', express.static(path.join(__dirname, 'public/css')));
 app.use('/img', express.static(path.join(__dirname, 'public/img')));
+app.use('/pages', express.static(path.join(__dirname, 'public/pages')));
+
 // Middleware para servir archivos estáticos desde 'public'
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -107,18 +109,7 @@ app.get('/', isAuthenticated, (req, res) => {
 });
 
 
-// Ruta dinámica para las actividades
-app.get('/activity/:id', isAuthenticated, (req, res) => {
-  const activityId = req.params.id;
-  const activityFilePath = path.join(__dirname, `public/pages/act${activityId}.html`);
 
-  res.sendFile(activityFilePath, (err) => {
-    if (err) {
-      console.error('Error al cargar la actividad:', err);
-      res.status(404).send('Actividad no encontrada');
-    }
-  });
-});
 
 
 

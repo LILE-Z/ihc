@@ -97,11 +97,11 @@ app.get('/', isAuthenticated, (req, res) => {
   
   // Datos de ejemplo para las actividades con identificadores
   const activities = [
-    { id: 1, title: 'Actividad 1', image: '/img/actividad1.png' },
-    { id: 2, title: 'Actividad 2', image: '/img/actividad2.webp' },
+    { id: 1, title: 'Actividad 1', image: '/img/actividad1.webp' },
+    { id: 2, title: 'Actividad 2', image: '/img/actividad2.jpg' },
     { id: 3, title: 'Actividad 3', image: '/img/actividad3.jpg' },
-    { id: 4, title: 'Actividad 4', image: '/img/actividad4.jpeg' },
-    { id: 5, title: 'Actividad 5', image: '/img/actividad5.jpg' },
+    { id: 4, title: 'Actividad 4', image: '/img/actividad4.webp' },
+    { id: 5, title: 'Actividad 5', image: '/img/actividad5.webp' },
   ];
 
   // Renderiza la vista 'index' con las actividades

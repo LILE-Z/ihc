@@ -24,7 +24,7 @@
         .image-row {
             display: flex;
             justify-content: center;
-            gap: 20px; /* Espaciado uniforme entre las imágenes */
+            gap: 20px;
         }
         .img-fluid {
             border: 2px solid #ffb6c1;
@@ -70,60 +70,31 @@
         <p>Who am I?</p>
     </div>
 
-    <!-- Contenedor para las imágenes centradas -->
     <div class="image-row">
-        <img src="https://www.shutterstock.com/image-vector/illustration-cute-baby-golden-retrieve-600nw-2488093199.jpg" alt="Dog" class="img-fluid" onclick="handleClick(this, 'animal1')">
-        <img src="https://media.istockphoto.com/id/907663118/vector/cartoon-cute-green-smiles-snake-vector-animal-illustration.jpg?s=612x612&w=0&k=20&c=ZjtezhkHn-ZQMQPh06zGvxOHa673jcWyRYRWVKkIa9U=" alt="Snake" class="img-fluid" onclick="handleClick(this, 'animal2')">
-        <img src="https://www.shutterstock.com/image-vector/cute-duck-green-head-standing-600nw-2314343477.jpg" alt="Duck" class="img-fluid" onclick="handleClick(this, 'animal3')">
-        <img src="https://media.istockphoto.com/id/1097490360/vector/vector-illustration-of-cute-black-cat.jpg?s=612x612&w=0&k=20&c=Ef0qYl79aZJ6NJXJVbJ0onjXVNnSyqrN_TKPjieAIGE=" alt="Cat" class="img-fluid" onclick="handleClick(this, 'animal4')">
+        <img src="https://www.shutterstock.com/image-vector/illustration-cute-baby-golden-retrieve-600nw-2488093199.jpg" alt="Dog" class="img-fluid" data-animal="dog">
+        <img src="https://media.istockphoto.com/id/907663118/vector/cartoon-cute-green-smiles-snake-vector-animal-illustration.jpg?s=612x612&w=0&k=20&c=ZjtezhkHn-ZQMQPh06zGvxOHa673jcWyRYRWVKkIa9U=" alt="Snake" class="img-fluid" data-animal="snake">
+        <img src="https://www.shutterstock.com/image-vector/cute-duck-green-head-standing-600nw-2314343477.jpg" alt="Duck" class="img-fluid" data-animal="duck">
+        <img src="https://media.istockphoto.com/id/1097490360/vector/vector-illustration-of-cute-black-cat.jpg?s=612x612&w=0&k=20&c=Ef0qYl79aZJ6NJXJVbJ0onjXVNnSyqrN_TKPjieAIGE=" alt="Cat" class="img-fluid" data-animal="cat">
     </div>
 </div>
 
-<!-- Modal for activity feedback -->
-<div id="feedbackModal" class="modal" tabindex="-1" style="display:none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.7);">
+<!-- Modal -->
+<div id="completionModal" class="modal" tabindex="-1" style="display:none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.7);">
     <div class="modal-dialog" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: #fffbf0; padding: 30px; border-radius: 15px; box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);">
         <div class="modal-content">
             <div class="modal-header" style="border-bottom: none; text-align: center;">
-                <h5 class="modal-title" id="modalTitle"></h5>
+                <h5 class="modal-title">Activity Completed!</h5>
             </div>
             <div class="modal-body">
-                <p id="modalBody"></p>
+                <p>Congratulations! You've completed the activity!</p>
             </div>
             <div class="modal-footer" style="justify-content: center;">
-                <button type="button" id="closeModal" class="btn btn-success" style="font-size: 1.2rem; padding: 10px 20px;">Close</button>
+                <button id="submitActivity" type="button" class="btn btn-success" style="font-size: 1.2rem; padding: 10px 20px;">Send Result</button>
             </div>
         </div>
     </div>
 </div>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<script>
-function handleClick(element, animal) {
-    const modal = document.getElementById('feedbackModal');
-    const modalTitle = document.getElementById('modalTitle');
-    const modalBody = document.getElementById('modalBody');
-    const closeButton = document.getElementById('closeModal');
-
-    if (animal === 'animal2') {  // Asumiendo que 'animal2' es la serpiente
-        element.classList.add('highlight');
-        modalTitle.textContent = 'Correct!';
-        modalBody.textContent = 'Great job! The snake is green and has no legs.';
-    } else {
-        element.classList.add('shake');
-        setTimeout(() => element.classList.remove('shake'), 500);
-        modalTitle.textContent = 'Try Again';
-        modalBody.textContent = 'That\'s not correct. Remember, I am green and have no legs.';
-    }
-
-    modal.style.display = 'block';
-
-    closeButton.onclick = function() {
-        modal.style.display = 'none';
-        if (animal !== 'animal2') {
-            element.classList.remove('highlight');
-        }
-    }
-}
-</script>
+<script src="/js/act3.js"></script>
 </body>
 </html>

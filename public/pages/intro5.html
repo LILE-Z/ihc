@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Activity 5 Introduction - Carnival Animal</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Custom CSS -->
+  <link href="/css/index-styles.css" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  <style>
+    .content-section {
+      background-color: rgba(16, 32, 61, 0.8);
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+    .content-section h2 {
+      color: #64ffda;
+      margin-bottom: 15px;
+    }
+    .content-section p {
+      color: #e6f1ff;
+    }
+  </style>
+</head>
+<body>
+  <div class="container-fluid min-vh-100 d-flex flex-column">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="/">
+          <img src="/img/logo2.png" alt="HOME" width="40" height="40">
+        </a>
+        <span class="navbar-text mx-auto h3 text-primary">Carnival Animal</span>
+        <div class="dropdown">
+          <button class="btn btn-link dropdown-toggle text-primary" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="fas fa-user"></i>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
+            <li><a class="dropdown-item" href="/logout">Cerrar sesión</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="flex-grow-1">
+      <div class="container my-4">
+        <h1 class="text-center mb-4 text-primary">Activity 5: Animal Bingo</h1>
+        
+        <!-- Description Section -->
+        <div class="content-section">
+          <h2>Activity Description</h2>
+          <p>
+            In this activity, children will practice identifying animals through a fun game of bingo. By observing the provided images, they will select the correct animal that matches the given clues. This interactive activity enhances visual recognition and decision-making skills.
+          </p>
+          <p>
+            En esta actividad, los niños practicarán la identificación de animales a través de un divertido juego de bingo. Al observar las imágenes proporcionadas, seleccionarán el animal correcto que coincida con las pistas dadas. Esta actividad interactiva mejora las habilidades de reconocimiento visual y toma de decisiones.
+          </p>
+        </div>
+
+        <!-- Video Section -->
+        <div class="content-section">
+          <h2>Introductory Video</h2>
+          <div class="ratio ratio-16x9">
+            <iframe src="https://www.youtube.com/embed/u4g3JFHJHso" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+        </div>
+
+        <!-- Button to Start Activity -->
+        <div class="text-center">
+          <a href="/pages/act5.html" class="btn btn-primary btn-lg">Start Activity</a>
+        </div>
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="text-center py-3">
+      <p class="text">&copy; 2024 Carnival Animal. Todos los derechos reservados.</p>
+    </footer>
+  </div>
+
+  <!-- Bootstrap JS Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -93,18 +93,33 @@ app.post('/login', (req, res) => {
 app.get('/', isAuthenticated, (req, res) => {
   console.log('Usuario autenticado accedió a la página principal:', req.session.user.email);
   
-  // Datos de ejemplo para las actividades
+  // Datos de ejemplo para las actividades con identificadores
   const activities = [
-    { title: 'Actividad 1', image: '/img/actividad1.png' },
-    { title: 'Actividad 2', image: '/img/actividad2.webp' },
-    { title: 'Actividad 3', image: '/img/actividad3.jpg' },
-    { title: 'Actividad 4', image: '/img/actividad4.jpeg' },
-    { title: 'Actividad 5', image: '/img/actividad5.jpg' },
+    { id: 1, title: 'Actividad 1', image: '/img/actividad1.png' },
+    { id: 2, title: 'Actividad 2', image: '/img/actividad2.webp' },
+    { id: 3, title: 'Actividad 3', image: '/img/actividad3.jpg' },
+    { id: 4, title: 'Actividad 4', image: '/img/actividad4.jpeg' },
+    { id: 5, title: 'Actividad 5', image: '/img/actividad5.jpg' },
   ];
 
   // Renderiza la vista 'index' con las actividades
   res.render('index', { activities });
 });
+
+
+// Ruta dinámica para las actividades
+app.get('/activity/:id', isAuthenticated, (req, res) => {
+  const activityId = req.params.id;
+  const activityFilePath = path.join(__dirname, `public/pages/act${activityId}.html`);
+
+  res.sendFile(activityFilePath, (err) => {
+    if (err) {
+      console.error('Error al cargar la actividad:', err);
+      res.status(404).send('Actividad no encontrada');
+    }
+  });
+});
+
 
 
 // Ruta para renderizar el formulario de recuperación

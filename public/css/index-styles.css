@@ -1,0 +1,83 @@
+body {
+    background-color: #0a192f;
+    color: #e6f1ff;
+    font-family: 'Arial', sans-serif;
+  }
+  
+  .navbar {
+    background-color: rgba(16, 32, 61, 0.8);
+    backdrop-filter: blur(10px);
+  }
+  
+  .navbar-brand img {
+    filter: brightness(0) invert(1);
+    width: 40px;  /* Cambia según tu preferencia */
+    height: 40px; /* Cambia según tu preferencia */
+}
+
+  
+.card {
+    background-color: rgba(16, 32, 61, 0.8);
+    border: none;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(10px);
+
+    width: 300px; /* Ajusta el ancho de la card */
+    height: 400px; /* Ajusta laauto altura */
+    margin: 5px auto; /* Agrega espacio y centra */
+    overflow: hidden; /* Evita que el contenido salga de la card */
+}
+
+  
+  .card-title {
+    color: #64ffda;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+  }
+  
+  .btn-primary {
+    background-color: #64ffda;
+    border-color: #64ffda;
+    color: #0a192f;
+    font-weight: bold;
+    transition: all 0.3s ease;
+  }
+  
+  .btn-primary:hover {
+    background-color: #0a192f;
+    border-color: #64ffda;
+    color: #64ffda;
+  }
+  
+  .form-control {
+    background-color: #0a192f;
+    border: 1px solid #172a45;
+    color: #e6f1ff;
+  }
+  
+  .form-control:focus {
+    box-shadow: 0 0 0 0.2rem rgba(100, 255, 218, 0.25);
+    border-color: #64ffda;
+    background-color: #0a192f;
+  }
+  
+  a {
+    color: #64ffda;
+    transition: all 0.3s ease;
+  }
+  
+  a:hover {
+    color: #e6f1ff;
+    text-shadow: 0 0 5px rgba(100, 255, 218, 0.5);
+  }
+  
+  .text-primary {
+    color: #64ffda !important;
+  }
+  
+  footer {
+    background-color: rgba(16, 32, 61, 0.8);
+    backdrop-filter: blur(10px);
+  }

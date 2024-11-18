@@ -3,7 +3,6 @@ require('dotenv').config(); // Cargar las variables de entorno desde .env
 const express = require('express');
 const session = require('express-session');
 const mysql = require('mysql2');
-const { GoogleGenerativeAI } = require('@google/generative-ai');
 const path = require('path');
 
 const app = express();
@@ -46,20 +45,16 @@ function isAuthenticated(req, res, next) {
   res.redirect('/login'); // Redirige al login
 }
 
-// Middleware para servir archivos CSS públicamente
+// Middleware para servir archivos estáticos (CSS)
 app.use('/css', express.static(path.join(__dirname, 'public/css')));
+app.use('/img', express.static(path.join(__dirname, 'public/img')));
 
-// Proteger el acceso a la carpeta pages
-app.use('/pages', isAuthenticated, express.static(path.join(__dirname, 'public/pages')));
 
-// Proteger el acceso a la carpeta js
-app.use('/js', isAuthenticated, express.static(path.join(__dirname, 'public/js')));
-
-// Configuración de vistas (login y register)
+// Configuración de vistas (HBS)
 app.set('view engine', 'hbs');
 app.set('views', path.join(__dirname, 'views'));
 
-// ---- SISTEMA DE LOGIN ----
+// ---- RUTAS ----
 
 // Ruta para renderizar el formulario de login
 app.get('/login', (req, res) => {
@@ -70,7 +65,6 @@ app.get('/login', (req, res) => {
 app.post('/login', (req, res) => {
   const { email, password } = req.body;
 
-  // Busca solo el usuario por correo
   const query = 'SELECT * FROM users WHERE email = ?';
   db.query(query, [email], (err, results) => {
     if (err) {
@@ -78,36 +72,38 @@ app.post('/login', (req, res) => {
       return res.status(500).send('Error del servidor');
     }
 
-    // Caso 1: Correo no registrado
-    if (results.length === 0) {
-      console.log('Correo no registrado:', email);
+    if (results.length === 0 || results[0].password !== password) {
+      console.log('Error de login para el correo:', email);
       return res.render('error-login', { message: 'Correo o contraseña incorrectos.' });
     }
 
-    const user = results[0];
-
-    // Caso 2: Contraseña incorrecta
-    if (password !== user.password) {
-      console.log('Contraseña incorrecta para el usuario:', email);
-      return res.render('error-login', { message: 'Correo o contraseña incorrectos.' });
-    }
-
-    // Caso de éxito: Usuario autenticado
-    console.log('Usuario autenticado:', user.email);
-    req.session.user = user; // Guarda al usuario en la sesión
-    return res.redirect('/');
+    console.log('Usuario autenticado:', results[0].email);
+    req.session.user = results[0]; // Guarda al usuario en la sesión
+    return res.redirect('/'); // Redirige al index
   });
 });
 
-// Ruta para servir la página principal (index.html)
+// Ruta para la página principal (index.hbs)
 app.get('/', isAuthenticated, (req, res) => {
-  console.log('Usuario autenticado accedió a la página principal:', req.session.user.email); // Log del acceso a la página principal
-  res.sendFile(path.join(__dirname, 'public/pages/index.html')); // Redirige al index.html dentro de /pages
+  console.log('Usuario autenticado accedió a la página principal:', req.session.user.email);
+  
+  // Datos de ejemplo para las actividades
+  const activities = [
+    { title: 'Actividad 1', image: '/img/actividad1.png' },
+    { title: 'Actividad 2', image: '/img/actividad2.webp' },
+    { title: 'Actividad 3', image: '/img/actividad3.jpg' },
+    { title: 'Actividad 4', image: '/img/actividad4.jpeg' },
+    { title: 'Actividad 5', image: '/img/actividad5.jpg' },
+  ];
+
+  // Renderiza la vista 'index' con las actividades
+  res.render('index', { activities });
 });
+
 
 // Ruta para renderizar el formulario de recuperación
 app.get('/forgot-password', (req, res) => {
-  res.render('forgot-password'); // Renderiza el formulario de recuperación
+  res.render('forgot-password');
 });
 
 // Ruta para manejar el envío del correo electrónico
@@ -121,10 +117,9 @@ app.post('/forgot-password', (req, res) => {
       return res.status(500).send('Error del servidor');
     }
 
-    // Si el correo no está registrado
     if (results.length === 0) {
       console.log('Correo no encontrado:', email);
-      return res.render('error-forgot-password'); // Redirige a la vista de error
+      return res.render('error-forgot-password');
     }
 
     console.log('Correo encontrado:', email);
@@ -137,7 +132,6 @@ app.get('/reset-password', (req, res) => {
   const email = req.query.email; // Obtiene el correo de la query
   res.render('reset-password', { email }); // Pasa el correo al formulario
 });
-
 
 // Ruta para manejar el cambio de contraseña
 app.post('/reset-password', (req, res) => {
@@ -154,7 +148,6 @@ app.post('/reset-password', (req, res) => {
     res.redirect('/login'); // Redirige al login después de actualizar la contraseña
   });
 });
-
 
 // Ruta para renderizar el formulario de registro
 app.get('/register', (req, res) => {
@@ -180,33 +173,6 @@ app.get('/logout', (req, res) => {
   req.session.destroy(() => {
     res.redirect('/login');
   });
-});
-
-// ---- FUNCIONALIDAD EXISTENTE ----
-
-const contexto = "Simula ser un profesor de inglés amable y motivador que revisa y da retroalimentación constructiva a un estudiante según su desempeño en una actividad que realizó, ademas el publico es para ninos de primero de primaria, yo te proporcionare de que trata y el puntaje.Y recuerda usar Markdown y que el texto sea de almenos 1000 characters, ademas puedes usar emojis para hacerlo más amigable.";
-
-// Variable temporal para almacenar el prompt
-let tempPrompt = ' ';
-
-// Ruta para recibir el prompt desde input.html
-app.post('/setPrompt', (req, res) => {
-  tempPrompt = contexto + req.body.prompt || 'Hello, Gemini!';
-  res.sendStatus(200); // Respuesta exitosa sin redirección
-});
-
-// Ruta para interactuar con la API de Gemini
-app.get('/generate', isAuthenticated, async (req, res) => {
-  try {
-    console.log(tempPrompt);
-    const response = await model.generateContent(tempPrompt);
-
-    console.log(response.response.text());
-    res.send(response.response.text());
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Error al generar texto con Gemini' });
-  }
 });
 
 // Servidor

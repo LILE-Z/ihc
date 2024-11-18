@@ -59,6 +59,9 @@
     <div class="container mt-5">
         <h1 class="text-center mb-4">Animal Carnival Review</h1>
         <div id="output" class="p-3 mb-3 shadow-sm">Estoy pensando, dame unos segundos....</div>
+        <div class="text-center mt-4">
+            <button id="finishButton" class="btn btn-primary btn-lg">Finalizar</button>
+        </div>
     </div>
 
     <script>
@@ -81,7 +84,11 @@
 
         // Llama a la función para configurar el prompt y generar el texto
         setPromptAndGenerate();
+
+        // Agregar evento para el botón finalizar
+        document.getElementById('finishButton').addEventListener('click', () => {
+            window.location.href = '/';
+        });
     </script>
 </body>
 </html>
-

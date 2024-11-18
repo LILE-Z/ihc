@@ -4,9 +4,13 @@ const express = require('express');
 const session = require('express-session');
 const mysql = require('mysql2');
 const path = require('path');
+const { GoogleGenerativeAI } = require('@google/generative-ai');
 
 const app = express();
 const PORT = 3000;
+
+const genAI = new GoogleGenerativeAI(process.env.API_KEY);
+const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
 
 // Middleware para manejar datos JSON y formularios
 app.use(express.json());
@@ -48,6 +52,8 @@ function isAuthenticated(req, res, next) {
 // Middleware para servir archivos estáticos (CSS)
 app.use('/css', express.static(path.join(__dirname, 'public/css')));
 app.use('/img', express.static(path.join(__dirname, 'public/img')));
+// Middleware para servir archivos estáticos desde 'public'
+app.use(express.static(path.join(__dirname, 'public')));
 
 
 // Configuración de vistas (HBS)
@@ -173,6 +179,32 @@ app.get('/logout', (req, res) => {
   req.session.destroy(() => {
     res.redirect('/login');
   });
+});
+// ---- FUNCIONALIDAD EXISTENTE ----
+
+const contexto = "Simula ser un profesor de inglés amable y motivador que revisa y da retroalimentación constructiva a un estudiante según su desempeño en una actividad que realizó, ademas el publico es para ninos de primero de primaria, yo te proporcionare de que trata y el puntaje.Y recuerda usar Markdown y que el texto sea de almenos 1000 characters, ademas puedes usar emojis para hacerlo más amigable.";
+
+// Variable temporal para almacenar el prompt
+let tempPrompt = ' ';
+
+// Ruta para recibir el prompt desde input.html
+app.post('/setPrompt', (req, res) => {
+  tempPrompt = contexto + req.body.prompt || 'Hello, Gemini!';
+  res.sendStatus(200); // Respuesta exitosa sin redirección
+});
+
+// Ruta para interactuar con la API de Gemini
+app.get('/generate', isAuthenticated, async (req, res) => {
+  try {
+    console.log(tempPrompt);
+    const response = await model.generateContent(tempPrompt);
+
+    console.log(response.response.text());
+    res.send(response.response.text());
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Error al generar texto con Gemini' });
+  }
 });
 
 // Servidor

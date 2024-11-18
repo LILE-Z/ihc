@@ -189,7 +189,7 @@ app.get('/logout', (req, res) => {
 // ---- FUNCIONALIDAD EXISTENTE ----
 
 const contexto = "Simula ser un profesor de inglés amable y motivador que revisa y da retroalimentación constructiva a un estudiante según su desempeño en una actividad que realizó, ademas el publico es para ninos de primero de primaria, yo te proporcionare de que trata y el puntaje.Y recuerda usar Markdown y que el texto sea de almenos 1000 characters, ademas puedes usar emojis para hacerlo más amigable.";
-
+const contexto2="Actua como un profesor de ingles de nivel primero de primaria en este modo solo responderas a preguntas sobre la materia, bajo ninguna circunstacia te salgas del tema que no conciernan a ninos de primero de primaria, ademas responde en espanol mx las explicaciones, recuerda usar markdown y emonjis";
 // Variable temporal para almacenar el prompt
 let tempPrompt = ' ';
 
@@ -212,6 +212,31 @@ app.get('/generate', isAuthenticated, async (req, res) => {
     res.status(500).json({ error: 'Error al generar texto con Gemini' });
   }
 });
+
+
+let tempPromptIA=''
+// Ruta para recibir el prompt desde chatbot.htmll
+app.post('/setPrompt2', (req, res) => {
+  tempPromptIA = contexto2 + req.body.prompt || 'Hello, Gemini!';
+  res.sendStatus(200); // Respuesta exitosa sin redirección
+});
+
+// Ruta para interactuar con la API de Gemini
+app.get('/generate2', isAuthenticated, async (req, res) => {
+  try {
+    console.log(tempPromptIA);
+    const response = await model.generateContent(tempPromptIA);
+
+    console.log(response.response.text());
+    res.send(response.response.text());
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Error al generar texto con Gemini' });
+  }
+});
+
+
+
 
 // Servidor
 app.listen(PORT, () => {

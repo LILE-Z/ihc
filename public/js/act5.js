@@ -45,7 +45,7 @@ function showCompletionModal() {
     const modal = document.getElementById("completionModal");
     const message = document.getElementById("modalMessage");
 
-    message.textContent = "You have completed the activity! Sending results to Gemini...";
+    message.textContent = "You have completed the activity! Sending results to AI...";
     modal.style.display = "block";
 }
 

@@ -35,7 +35,7 @@ function showCompletionModal() {
     let correctCount = 0;
     // const contexto = "Simula ser un profesor de inglés amable y motivador que revisa y da retroalimentación constructiva a un estudiante según su desempeño en una actividad que realizó. Te proporcionaré toda la información necesaria.Y recuerda usar Markdown y que el texto sea de almenos 1000 characters, ademas puedes usar emojis para hacerlo más amigable.";
 
-    let report = "Activity Name: Guess the Animal Name!\n\nDescription: The activity consisted of guessing the correct letters for different animal names based on the images shown.\n\nResults:\n";
+    let report = "Activity Name: Animal Name Challenge!\n\nDescription: The activity consisted of guessing the correct letters for different animal names based on the images shown.\n\nResults:\n";
 
     inputs.forEach(input => {
         const animal = input.dataset.animal;

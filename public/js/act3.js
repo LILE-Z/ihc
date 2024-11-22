@@ -42,7 +42,7 @@ function showCompletionModal(title, message) {
 
 // Función para enviar resultados a la IA de Gemini
 function sendResultsToGemini() {
-    const prompt = `Activity: Circle the Right Picture\n\nResults:\n` +
+    const prompt = `Activity: Guess Who I Am\n\nResults:\n` +
         interactions
             .map((interaction, index) => {
                 return `${index + 1}. Question: ${interaction.question}\nSelected: ${interaction.selected}\nResult: ${interaction.result}`;

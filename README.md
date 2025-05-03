@@ -1,4 +1,4 @@
-### Carnival of the Animals
+# Carnival of the Animals
 ## Español:
 Este proyecto fue diseñado para involucrar a niños de primaria mediante contenido interactivo en inglés, ofreciendo una experiencia de aprendizaje personalizada impulsada por inteligencia artificial. 
 El objetivo principal era analizar el comportamiento en la interacción humano-computadora y aprender de forma básica cómo funciona Node.js, incluyendo el manejo de handlers.
